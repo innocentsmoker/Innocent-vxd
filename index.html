@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Downloader | Created by [Your Name]</title>
+    <title>YouTube Downloader | INNOCENT TECH</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -12,24 +12,36 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #666;
+            --success: #28a745;
+            --error: #dc3545;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #333;
+            color: var(--dark);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 20px;
             padding: 40px;
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
@@ -40,39 +52,61 @@
             position: relative;
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .brand-logo {
             font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .brand-text {
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        h1 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 2.2em;
             display: inline-block;
         }
 
         .logo {
-            font-size: 2.8em;
+            font-size: 2.5em;
             margin-right: 10px;
             vertical-align: middle;
+            color: var(--primary);
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
+            color: var(--gray);
             margin-bottom: 30px;
-            font-size: 0.95em;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .creator {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 5px 15px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 0.8em;
+            font-size: 0.9em;
             font-weight: 600;
             box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
         }
@@ -85,25 +119,27 @@
 
         input[type="text"] {
             flex: 1;
-            padding: 15px 20px;
+            padding: 18px 20px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s;
             outline: none;
+            background: var(--light);
         }
 
         input[type="text"]:focus {
-            border-color: #667eea;
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
         }
 
         button {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 18px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -137,7 +173,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -153,8 +189,8 @@
         .video-info {
             display: none;
             margin-bottom: 30px;
-            padding: 20px;
-            background: #f8f9fa;
+            padding: 25px;
+            background: var(--light);
             border-radius: 15px;
             animation: fadeIn 0.5s ease;
         }
@@ -186,13 +222,13 @@
         .video-title {
             font-size: 1.3em;
             font-weight: 600;
-            color: #333;
+            color: var(--dark);
             margin-bottom: 10px;
             line-height: 1.4;
         }
 
         .video-duration {
-            color: #666;
+            color: var(--gray);
             font-size: 0.9em;
             display: flex;
             align-items: center;
@@ -206,10 +242,10 @@
         .format-type-title {
             font-size: 1.1em;
             font-weight: 600;
-            color: #333;
+            color: var(--dark);
             margin: 20px 0 10px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid var(--primary);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -224,37 +260,37 @@
 
         .format-card {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 12px;
             border: 2px solid #e0e0e0;
             transition: all 0.3s;
         }
 
         .format-card:hover {
-            border-color: #667eea;
+            border-color: var(--primary);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
 
         .format-label {
             font-weight: 600;
-            color: #333;
+            color: var(--dark);
             margin-bottom: 5px;
             font-size: 1.1em;
         }
 
         .format-details {
             font-size: 0.85em;
-            color: #666;
+            color: var(--gray);
             margin-bottom: 10px;
             line-height: 1.6;
         }
 
         .download-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -274,29 +310,29 @@
 
         .error {
             background: #fee;
-            color: #c33;
+            color: var(--error);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
             display: none;
-            border-left: 4px solid #c33;
+            border-left: 4px solid var(--error);
             animation: fadeIn 0.3s ease;
         }
 
         .success {
             background: #efe;
-            color: #3a3;
+            color: var(--success);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
             display: none;
-            border-left: 4px solid #3a3;
+            border-left: 4px solid var(--success);
             animation: fadeIn 0.3s ease;
         }
 
         .quality-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             padding: 3px 10px;
             border-radius: 12px;
@@ -308,24 +344,25 @@
         .footer {
             text-align: center;
             margin-top: 30px;
-            color: #666;
+            color: var(--gray);
             font-size: 0.9em;
             padding-top: 20px;
             border-top: 1px solid #e0e0e0;
         }
 
         .instructions {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
             margin-bottom: 20px;
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #555;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         .instructions h3 {
             margin-bottom: 10px;
-            color: #333;
+            color: var(--dark);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -340,6 +377,29 @@
             line-height: 1.5;
         }
 
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 15px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -347,7 +407,7 @@
             }
             
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
             .input-group {
@@ -374,15 +434,39 @@
                 display: inline-block;
                 margin-bottom: 10px;
             }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="creator">Created by [Your Name]</div>
+            <div class="creator">Created by INNOCENT TECH</div>
+            <div class="brand">
+                <i class="fas fa-download brand-logo"></i>
+                <div class="brand-text">INNOCENT TECH</div>
+            </div>
             <h1><i class="fab fa-youtube logo"></i> YouTube Downloader</h1>
-            <p class="subtitle">Download your favorite YouTube videos and audio tracks in high quality</p>
+            <p class="subtitle">Download your favorite YouTube videos and audio tracks in high quality with our fast and reliable service</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Downloads</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">99%</span>
+                <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">4.9</span>
+                <span class="stat-label">User Rating</span>
+            </div>
         </div>
 
         <div class="instructions">
@@ -431,7 +515,7 @@
 
         <div class="footer">
             <p>This tool is for personal use only. Please respect YouTube's terms of service and copyright laws.</p>
-            <p>Created with ❤️ by [Your Name]</p>
+            <p>Created with ❤️ by <strong>INNOCENT TECH</strong></p>
         </div>
     </div>
 
@@ -617,4 +701,4 @@
         console.log('API Endpoint:', API_URL);
     </script>
 </body>
-    </html>
+</html>
