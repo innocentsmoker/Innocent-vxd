@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Downloader | INNOCENT TECH</title>
+    <title>YouTube Downloader | Created by [Your Name]</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -258,3 +258,363 @@
             color: white;
             border: none;
             border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #c33;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .success {
+            background: #efe;
+            color: #3a3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #3a3;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .quality-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .video-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .thumbnail {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .formats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .creator {
+                position: static;
+                display: inline-block;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="creator">Created by [Your Name]</div>
+            <h1><i class="fab fa-youtube logo"></i> YouTube Downloader</h1>
+            <p class="subtitle">Download your favorite YouTube videos and audio tracks in high quality</p>
+        </div>
+
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How to use:</h3>
+            <ol>
+                <li>Copy the URL of the YouTube video you want to download</li>
+                <li>Paste the URL in the input field below</li>
+                <li>Click "Get Video" to see available download options</li>
+                <li>Select your preferred format and quality</li>
+                <li>Click the download button to save the file</li>
+            </ol>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Paste YouTube URL here (e.g., https://www.youtube.com/watch?v=...)" />
+            <button onclick="fetchVideo()" id="fetchBtn">
+                <i class="fas fa-download"></i> Get Video
+            </button>
+        </div>
+
+        <div class="error" id="error"></div>
+        <div class="success" id="success"></div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Fetching video information...</p>
+        </div>
+
+        <div class="video-info" id="videoInfo">
+            <div class="video-header">
+                <img id="thumbnail" class="thumbnail" alt="Video thumbnail" />
+                <div class="video-details">
+                    <div class="video-title" id="title"></div>
+                    <div class="video-duration" id="duration"></div>
+                </div>
+            </div>
+
+            <div class="formats-section">
+                <div class="format-type-title"><i class="fas fa-film"></i> Video Formats</div>
+                <div class="formats-grid" id="videoFormats"></div>
+
+                <div class="format-type-title"><i class="fas fa-music"></i> Audio Formats</div>
+                <div class="formats-grid" id="audioFormats"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>This tool is for personal use only. Please respect YouTube's terms of service and copyright laws.</p>
+            <p>Created with ❤️ by [Your Name]</p>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration - Change this to your deployed API URL
+        const API_URL = 'https://casper-tech-apis.vercel.app/api/downloader/yt-dl';
+
+        async function fetchVideo() {
+            const urlInput = document.getElementById('urlInput');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showError('Please enter a YouTube URL');
+                return;
+            }
+
+            // Basic URL validation
+            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+                showError('Please enter a valid YouTube URL');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const videoInfo = document.getElementById('videoInfo');
+            const errorDiv = document.getElementById('error');
+            const successDiv = document.getElementById('success');
+            const fetchBtn = document.getElementById('fetchBtn');
+            
+            loading.style.display = 'block';
+            videoInfo.style.display = 'none';
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            fetchBtn.disabled = true;
+            fetchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            try {
+                const apiUrl = `${API_URL}?url=${encodeURIComponent(url)}`;
+                console.log('Fetching:', apiUrl);
+                
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                if (!data.success || data.error) {
+                    throw new Error(data.message || 'Failed to fetch video information');
+                }
+
+                if (!data.medias || data.medias.length === 0) {
+                    throw new Error('No download formats available');
+                }
+
+                displayVideoInfo(data);
+                showSuccess(data.cached ? 'Video loaded from cache!' : 'Video fetched successfully!');
+            } catch (e) {
+                console.error('Error:', e);
+                showError(`Error: ${e.message}`);
+            } finally {
+                loading.style.display = 'none';
+                fetchBtn.disabled = false;
+                fetchBtn.innerHTML = '<i class="fas fa-download"></i> Get Video';
+            }
+        }
+
+        function displayVideoInfo(data) {
+            document.getElementById('thumbnail').src = data.thumbnail;
+            document.getElementById('title').textContent = data.title;
+            document.getElementById('duration').innerHTML = `<i class="far fa-clock"></i> Duration: ${formatDuration(data.duration)}`;
+
+            const videoFormats = data.medias.filter(m => m.type === 'video' && m.width && m.height);
+            const audioFormats = data.medias.filter(m => m.type === 'audio');
+
+            displayFormats(videoFormats, 'videoFormats', true);
+            displayFormats(audioFormats, 'audioFormats', false);
+
+            document.getElementById('videoInfo').style.display = 'block';
+        }
+
+        function displayFormats(formats, containerId, isVideo) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            // Sort formats by quality
+            formats.sort((a, b) => {
+                if (isVideo) {
+                    return (b.width * b.height) - (a.width * a.height);
+                } else {
+                    return b.bitrate - a.bitrate;
+                }
+            });
+
+            formats.forEach(format => {
+                const card = document.createElement('div');
+                card.className = 'format-card';
+                
+                let qualityInfo = '';
+                let badge = '';
+                
+                if (isVideo) {
+                    qualityInfo = `${format.width}x${format.height}`;
+                    if (format.fps) qualityInfo += ` (${format.fps}fps)`;
+                    if (format.height >= 720) badge = '<span class="quality-badge">HD</span>';
+                    if (format.height >= 1080) badge = '<span class="quality-badge">FHD</span>';
+                    if (format.height >= 1440) badge = '<span class="quality-badge">QHD</span>';
+                    if (format.height >= 2160) badge = '<span class="quality-badge">4K</span>';
+                } else {
+                    qualityInfo = format.label;
+                    const bitrate = Math.round(format.bitrate / 1000);
+                    if (bitrate >= 128) badge = '<span class="quality-badge">High Quality</span>';
+                }
+                
+                const size = format.bitrate ? 
+                    `${Math.round(format.bitrate / 1000)} kb/s` : 
+                    'N/A';
+
+                card.innerHTML = `
+                    <div class="format-label">${format.quality}${badge}</div>
+                    <div class="format-details">
+                        <i class="fas fa-expand-arrows-alt"></i> ${qualityInfo}<br>
+                        <i class="fas fa-tachometer-alt"></i> Bitrate: ${size}<br>
+                        <i class="fas fa-file"></i> Format: ${format.ext.toUpperCase()}
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('${format.url}', '${format.ext}', '${format.quality}')">
+                        <i class="fas fa-download"></i> Download ${format.ext.toUpperCase()}
+                    </button>
+                `;
+                
+                container.appendChild(card);
+            });
+
+            if (formats.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;"><i class="fas fa-exclamation-circle"></i> No formats available</p>';
+            }
+        }
+
+        function downloadFile(url, ext, quality) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `video-${quality}.${ext}`;
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showSuccess(`Download started: ${quality}`);
+        }
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success');
+            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                fetchVideo();
+            }
+        });
+
+        // Test API on load
+        console.log('YouTube Downloader Ready!');
+        console.log('API Endpoint:', API_URL);
+    </script>
+</body>
+    </html>
