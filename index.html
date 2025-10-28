@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Downloader | INNOCENT TECH</title>
+    <title>Welcome to innocent YouTube Downloader | INNOCENT TECH</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -33,7 +33,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -42,6 +42,20 @@
             color: var(--dark);
             position: relative;
             overflow-x: hidden;
+            animation: backgroundShift 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes backgroundShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Animated Background Elements */
@@ -65,7 +79,7 @@
             top: 10%;
             left: 5%;
             font-size: 40px;
-            color: var(--primary);
+            color: #3498db;
             animation-delay: 0s;
         }
 
@@ -73,7 +87,7 @@
             top: 70%;
             left: 10%;
             font-size: 35px;
-            color: var(--secondary);
+            color: #2ecc71;
             animation-delay: 2s;
             animation-duration: 20s;
         }
@@ -82,7 +96,7 @@
             top: 20%;
             right: 10%;
             font-size: 45px;
-            color: var(--primary);
+            color: #e74c3c;
             animation-delay: 4s;
             animation-duration: 18s;
         }
@@ -91,7 +105,7 @@
             top: 80%;
             right: 5%;
             font-size: 30px;
-            color: var(--secondary);
+            color: #e84393;
             animation-delay: 6s;
             animation-duration: 22s;
         }
@@ -100,7 +114,7 @@
             top: 50%;
             left: 15%;
             font-size: 38px;
-            color: var(--primary);
+            color: #3498db;
             animation-delay: 8s;
             animation-duration: 17s;
         }
@@ -109,7 +123,7 @@
             top: 40%;
             right: 20%;
             font-size: 42px;
-            color: var(--secondary);
+            color: #2ecc71;
             animation-delay: 10s;
             animation-duration: 19s;
         }
@@ -141,8 +155,32 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
-            border: 2px solid var(--primary);
             z-index: 1;
+            border: 2px solid transparent;
+            animation: borderColors 8s linear infinite;
+        }
+
+        @keyframes borderColors {
+            0% {
+                border-color: #3498db;
+                box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+            }
+            25% {
+                border-color: #2ecc71;
+                box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+            }
+            50% {
+                border-color: #e74c3c;
+                box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+            }
+            75% {
+                border-color: #e84393;
+                box-shadow: 0 0 20px rgba(232, 67, 147, 0.5);
+            }
+            100% {
+                border-color: #3498db;
+                box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+            }
         }
 
         .container::before {
@@ -152,8 +190,30 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: var(--gold-green-gradient);
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #e84393);
             z-index: 1;
+            animation: edgeColors 4s linear infinite;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #e84393);
+            z-index: 1;
+            animation: edgeColors 4s linear infinite reverse;
+        }
+
+        @keyframes edgeColors {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 400% 0%;
+            }
         }
 
         .header {
@@ -622,7 +682,7 @@
             <div class="creator">Created by INNOCENT TECH</div>
             <div class="brand">
                 <i class="fas fa-download brand-logo"></i>
-                <div class="brand-text">INNOCENT TECH</div>
+                <div class="brand-text">INNOCENT XD</div>
             </div>
             <h1><i class="fab fa-youtube logo"></i> YouTube Downloader</h1>
             <p class="subtitle">Download your favorite YouTube videos and audio tracks in high quality with our fast and reliable service</p>
@@ -689,7 +749,7 @@
 
         <div class="footer">
             <p>This tool is for personal use only. Please respect YouTube's terms of service and copyright laws.</p>
-            <p>Created with ❤️ by <strong>INNOCENT TECH</strong></p>
+            <p>Created with ❤️ by <strong>INNOCENT SMOKER TECH</strong></p>
         </div>
     </div>
 
