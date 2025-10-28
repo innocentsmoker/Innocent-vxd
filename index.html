@@ -13,20 +13,25 @@
         }
 
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
-            --dark: #333;
-            --gray: #666;
-            --success: #28a745;
-            --error: #dc3545;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --primary: #D4AF37;
+            --primary-light: #FFD700;
+            --primary-dark: #B8860B;
+            --secondary: #8B7500;
+            --accent: #FFC125;
+            --light: #FFF8DC;
+            --dark: #2A2A2A;
+            --gray: #8B7D6B;
+            --success: #32CD32;
+            --error: #DC143C;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+            --gold-gradient-light: linear-gradient(135deg, #FFD700 0%, #FFEC8B 100%);
+            --gold-gradient-dark: linear-gradient(135deg, #B8860B 0%, #8B7500 100%);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2A2A2A 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,14 +41,26 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
+            background: rgba(255, 248, 220, 0.95);
+            border-radius: 25px;
             padding: 40px;
             max-width: 1000px;
             width: 100%;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gold-gradient);
+            z-index: 1;
         }
 
         .header {
@@ -63,15 +80,17 @@
             font-size: 2.5em;
             color: var(--primary);
             margin-right: 15px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
 
         .brand-text {
             font-size: 1.8em;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -102,13 +121,14 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gold-gradient);
             color: white;
             padding: 8px 18px;
             border-radius: 20px;
             font-size: 0.9em;
             font-weight: 600;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .input-group {
@@ -120,23 +140,24 @@
         input[type="text"] {
             flex: 1;
             padding: 18px 20px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #e0d6b5;
             border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s;
             outline: none;
             background: var(--light);
+            color: var(--dark);
         }
 
         input[type="text"]:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
             background: white;
         }
 
         button {
             padding: 18px 30px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gold-gradient);
             color: white;
             border: none;
             border-radius: 12px;
@@ -148,11 +169,29 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
         button:active {
@@ -190,9 +229,11 @@
             display: none;
             margin-bottom: 30px;
             padding: 25px;
-            background: var(--light);
+            background: white;
             border-radius: 15px;
             animation: fadeIn 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0d6b5;
         }
 
         @keyframes fadeIn {
@@ -212,6 +253,7 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--primary);
         }
 
         .video-details {
@@ -262,14 +304,15 @@
             background: white;
             padding: 18px;
             border-radius: 12px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #e0d6b5;
             transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         .format-card:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
         }
 
         .format-label {
@@ -290,7 +333,7 @@
             width: 100%;
             padding: 12px;
             font-size: 14px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gold-gradient);
             color: white;
             border: none;
             border-radius: 8px;
@@ -301,11 +344,12 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            box-shadow: 0 3px 8px rgba(212, 175, 55, 0.3);
         }
 
         .download-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 12px rgba(212, 175, 55, 0.4);
         }
 
         .error {
@@ -332,7 +376,7 @@
 
         .quality-badge {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--gold-gradient);
             color: white;
             padding: 3px 10px;
             border-radius: 12px;
@@ -347,7 +391,7 @@
             color: var(--gray);
             font-size: 0.9em;
             padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid #e0d6b5;
         }
 
         .instructions {
@@ -358,6 +402,7 @@
             font-size: 0.95em;
             color: #555;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0d6b5;
         }
 
         .instructions h3 {
@@ -391,13 +436,32 @@
         .stat-number {
             font-size: 2em;
             font-weight: 700;
-            color: var(--primary);
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
         }
 
         .stat-label {
             font-size: 0.9em;
             color: var(--gray);
+        }
+
+        /* Gold accent elements */
+        .gold-accent {
+            background: var(--gold-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .gold-bar {
+            height: 4px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
+            margin: 10px 0;
         }
 
         /* Responsive adjustments */
@@ -515,7 +579,7 @@
 
         <div class="footer">
             <p>This tool is for personal use only. Please respect YouTube's terms of service and copyright laws.</p>
-            <p>Created with ❤️ by <strong>INNOCENT SMOKER TECH</strong></p>
+            <p>Created with ❤️ by <strong>INNØCENT SMØKER TECH</strong></p>
         </div>
     </div>
 
